@@ -21,7 +21,7 @@ const userSchema = mongoose.Schema({
       }
     },
   },
-  parssword: {
+  password: {
     type: String,
     required: true,
     minlength: 7,
@@ -31,6 +31,10 @@ const userSchema = mongoose.Schema({
         throw new Error("Password cannot contain password");
       }
     },
+  },
+  age: {
+    type: Number,
+    trim: true,
   },
 });
 
@@ -43,9 +47,9 @@ userSchema.plugin(toJSON);
  * @param {ObjectId} [excludeUserId] - The id of the user to be excluded
  * @returns {Promise<boolean>}
  */
-userSchema.statics.isEmailTaken = async (email, excludeUserId) => {
+userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
   const user = this.findOne({ email, _id: { $ne: excludeUserId } });
-  return !user;
+  return user;
 };
 
 /**
@@ -53,12 +57,12 @@ userSchema.statics.isEmailTaken = async (email, excludeUserId) => {
  * @param {string} password
  * @returns {Promise<boolean>}
  */
-userSchema.methods.isPasswordMatch = async (password) => {
+userSchema.methods.isPasswordMatch = async function (password) {
   const user = this;
   return bcrypt.compare(password, user.password);
 };
 
-userSchema.pre("save", async (next) => {
+userSchema.pre("save", async function (next) {
   const user = this;
   if (user.isModified("password")) {
     user.password = await bcrypt.hash(user.password, 8);

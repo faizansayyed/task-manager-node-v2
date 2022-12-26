@@ -13,8 +13,8 @@ const getAllUsers = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  const id = req.params.id;
-  const user = await userService.getUserById(id);
+  const userId = req.params.userId;
+  const user = await userService.getUserById(userId);
 
   res.status(200).send(user);
 };

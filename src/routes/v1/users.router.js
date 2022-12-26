@@ -15,7 +15,7 @@ router
   .get(
     // auth("getUsers"),
     validateRequest(),
-    catchAsync(userController.getUsers)
+    catchAsync(userController.getAllUsers)
   );
 
 router

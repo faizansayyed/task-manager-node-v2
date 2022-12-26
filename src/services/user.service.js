@@ -8,10 +8,11 @@ const ApiError = require("../utils/ApiError");
  * @returns {Promise<User>}
  */
 const createUser = async (userBody) => {
-  if (await User.isEmailTaken(userBody.email)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "Email already taken");
+  const user = await User.isEmailTaken(userBody.email);
+  if (!user) {
+    return User.create(userBody);
   }
-  return User.create(userBody);
+  throw new ApiError(httpStatus.BAD_REQUEST, "Email already taken");
 };
 
 /**
@@ -52,7 +53,7 @@ const getUserByEmail = async (email) => {
  * @param {Object} updateBody
  * @returns {Promise<User>}
  */
-const updateUserById = async (userI, updateBody) => {
+const updateUserById = async (userId, updateBody) => {
   const user = await getUserById(userId);
 
   if (!user) {

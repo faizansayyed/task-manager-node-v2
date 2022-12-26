@@ -9,6 +9,7 @@ const compression = require("compression");
 const { errorConverter, errorHandler } = require("./middlewares/error");
 const ApiError = require("./utils/ApiError");
 const helmet = require("helmet");
+const httpStatus = require("http-status");
 
 const app = express();
 
