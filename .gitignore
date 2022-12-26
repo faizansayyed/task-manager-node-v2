@@ -1,0 +1,8 @@
+# Dependencies
+node_modules
+
+# Environment varibales
+.env*
+
+# Code coverage
+coverage
