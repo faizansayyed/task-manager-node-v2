@@ -46,6 +46,11 @@ const verifyToken = (token) => {
   return payload;
 };
 
+/**
+ * Generate auth tokens
+ * @param {User} user
+ * @returns {Promise<Object>}
+ */
 const generateAuthToken = async (user) => {
   const accessTokenExpires = moment().add(
     config.jwt.accessExpirationMinutes,
