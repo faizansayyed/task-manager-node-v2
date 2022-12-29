@@ -4,6 +4,7 @@ const moment = require("moment");
 const ApiError = require("../utils/ApiError");
 const { token } = require("morgan");
 const { tokenTypes } = require("../config/tokens");
+const { Token } = require("../models");
 
 /**
  * Generate Auth token
@@ -36,14 +37,42 @@ const generateToken = async (
  * @param {string} type
  * @returns {Promise<Token>}
  */
-const verifyToken = (token) => {
+const verifyToken = (token, type) => {
   const payload = jwt.verify(token, config.jwt.secret);
 
-  if (!payload) {
+  const tokenDoc = Token.findOne({
+    token,
+    type,
+    userId: payload.sub,
+    blacklisted: false,
+  });
+
+  if (!tokenDoc) {
     throw new ApiError("Token not found");
   }
 
-  return payload;
+  return tokenDoc;
+};
+
+/**
+ * Save a token
+ * @param {string} token
+ * @param {ObjectId} userId
+ * @param {Moment} expires
+ * @param {string} type
+ * @param {boolean} [blacklisted]
+ * @returns {Promise<Token>}
+ */
+const saveToken = async (token, userId, expires, type, blacklisted = false) => {
+  const tokenDoc = await Token.create({
+    token,
+    userId,
+    expires,
+    type,
+    blacklisted,
+  });
+
+  return tokenDoc;
 };
 
 /**
@@ -72,6 +101,13 @@ const generateAuthToken = async (user) => {
     tokenTypes.REFRESH
   );
 
+  await saveToken(
+    refreshToken,
+    user.id,
+    refreshTokenExpires,
+    tokenTypes.REFRESH
+  );
+
   return {
     access: {
       token: accessToken,
@@ -88,4 +124,5 @@ module.exports = {
   generateToken,
   verifyToken,
   generateAuthToken,
+  saveToken,
 };
