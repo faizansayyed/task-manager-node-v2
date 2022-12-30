@@ -3,7 +3,7 @@ const { authService, tokenService, userService } = require("../services");
 
 const register = async (req, res) => {
   const user = await userService.createUser(req.body);
-  const tokens = await tokenService.generateAuthToken(user);
+  const tokens = await tokenService.generateAuthTokens(user);
   res.status(200).send({ message: "User Registered", user, tokens });
 };
 
@@ -13,17 +13,23 @@ const login = async (req, res) => {
     req.body.password
   );
 
-  const tokens = await tokenService.generateAuthToken(user);
+  const tokens = await tokenService.generateAuthTokens(user);
   res.status(200).send({ message: "Logged In successfully!", user, tokens });
 };
 
 const logout = async (req, res) => {
-  await authService.logout(req.user, req.token);
+  await authService.logout(req.token);
   res.status(200).send({ message: "Logged Out successfully!" });
+};
+
+const refreshTokens = async (req, res) => {
+  const tokens = await authService.refreshAuth(req.body.refreshToken);
+  res.status(200).send({ message: "Refresh Token", tokens });
 };
 
 module.exports = {
   register,
   login,
   logout,
+  refreshTokens,
 };

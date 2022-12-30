@@ -20,4 +20,6 @@ router.post(
   catchAsync(authController.logout)
 );
 
+router.post("/refresh-tokens", validateRequest(), authController.refreshTokens);
+
 module.exports = router;

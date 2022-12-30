@@ -80,7 +80,7 @@ const saveToken = async (token, userId, expires, type, blacklisted = false) => {
  * @param {User} user
  * @returns {Promise<Object>}
  */
-const generateAuthToken = async (user) => {
+const generateAuthTokens = async (user) => {
   const accessTokenExpires = moment().add(
     config.jwt.accessExpirationMinutes,
     "minutes"
@@ -123,6 +123,6 @@ const generateAuthToken = async (user) => {
 module.exports = {
   generateToken,
   verifyToken,
-  generateAuthToken,
+  generateAuthTokens,
   saveToken,
 };
