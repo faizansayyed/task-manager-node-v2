@@ -9,12 +9,12 @@ const createTask = async (req, res) => {
 
 const getAllTasks = async (req, res) => {
   const tasks = await taskService.queryTasks();
-  res.status(200).send(tasks);
+  res.status(200).send({ message: "Tasks", tasks });
 };
 
 const getTask = async (req, res) => {
   const task = await taskService.getTaskById(req.params.taskId);
-  res.status(200).send({ message: "Tasks", task });
+  res.status(200).send({ message: "Task", task });
 };
 
 const updateTask = async (req, res) => {
