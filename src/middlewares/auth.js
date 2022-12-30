@@ -20,6 +20,7 @@ const auth = async (req, res, next) => {
     if (!tokenDoc) {
       throw new ApiError(httpStatus.UNAUTHORIZED, "Unauthorized!");
     }
+    req.token = tokenDoc.token;
     req.user = tokenDoc.userId;
     next();
   } catch (error) {

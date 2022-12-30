@@ -1,6 +1,8 @@
 const httpStatus = require("http-status");
 const ApiError = require("../utils/ApiError");
 const userService = require("./user.service");
+const { Token } = require("../models");
+const { tokenTypes } = require("../config/tokens");
 
 /**
  * Login user with emil and password
@@ -21,8 +23,18 @@ const loginUserWithEmailAndPassword = async (email, password) => {
  * Logout user
  * @returns {}
  */
-const logout = async () => {};
+const logout = async (user, token) => {
+  const tokenDoc = await Token.findOne({
+    token,
+    type: tokenTypes.REFRESH,
+    userId: user.id,
+    blacklisted: false,
+  });
+
+  await tokenDoc.remove();
+};
 
 module.exports = {
   loginUserWithEmailAndPassword,
+  logout,
 };
