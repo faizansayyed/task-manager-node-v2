@@ -30,4 +30,10 @@ router.post(
   validateRequest(),
   catchAsync(authController.forgotPassword)
 );
+
+router.post(
+  "/reset-password",
+  validateRequest(),
+  catchAsync(authController.resetPassword)
+);
 module.exports = router;

@@ -31,6 +31,7 @@ const refreshTokens = async (req, res) => {
   const tokens = await authService.refreshAuth(req.body.refreshToken);
   res.status(200).send({ message: "Refresh Token", tokens });
 };
+
 const forgotPassword = async (req, res) => {
   const resetPasswordToken = await tokenService.generateResetPasswordToken(
     req.body.email
@@ -40,10 +41,17 @@ const forgotPassword = async (req, res) => {
   res.status(200).send({ message: "Link Generated, please check your email!" });
 };
 
+const resetPassword = async (req, res) => {
+  await authService.resetPassword(req.body.token, req.body.password);
+
+  res.status(200).send({ message: "Password Updated Successfully!" });
+};
+
 module.exports = {
   register,
   login,
   logout,
   refreshTokens,
   forgotPassword,
+  resetPassword,
 };
