@@ -3,7 +3,7 @@ const ApiError = require("../utils/ApiError");
 const userService = require("./user.service");
 const { Token } = require("../models");
 const { tokenTypes } = require("../config/tokens");
-const { tokenService } = require(".");
+const { tokenService } = require("./token.service");
 
 /**
  * Login user with emil and password

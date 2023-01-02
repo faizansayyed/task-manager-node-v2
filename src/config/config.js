@@ -29,5 +29,6 @@ module.exports = {
       },
     },
     from: envVars.EMAIL_FROM,
+    sendGridApiKey: envVars.SENDGRID_API_KEY,
   },
 };

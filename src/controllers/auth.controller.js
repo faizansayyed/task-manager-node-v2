@@ -1,5 +1,10 @@
 const httpStatus = require("http-status");
-const { authService, tokenService, userService } = require("../services");
+const {
+  authService,
+  tokenService,
+  userService,
+  emailService,
+} = require("../services");
 
 const register = async (req, res) => {
   const user = await userService.createUser(req.body);
@@ -26,10 +31,19 @@ const refreshTokens = async (req, res) => {
   const tokens = await authService.refreshAuth(req.body.refreshToken);
   res.status(200).send({ message: "Refresh Token", tokens });
 };
+const forgotPassword = async (req, res) => {
+  const resetPasswordToken = await tokenService.generateResetPasswordToken(
+    req.body.email
+  );
+  await emailService.sendResetPasswordEmail(req.body.email, resetPasswordToken);
+
+  res.status(200).send({ message: "Link Generated, please check your email!" });
+};
 
 module.exports = {
   register,
   login,
   logout,
   refreshTokens,
+  forgotPassword,
 };

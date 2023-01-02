@@ -34,6 +34,7 @@ const errorHandler = (err, req, res, next) => {
   };
 
   if (config.env === "development") {
+    console.log("error logs")
     logger.error(err);
   }
 
