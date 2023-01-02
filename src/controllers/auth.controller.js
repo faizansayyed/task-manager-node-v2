@@ -47,6 +47,22 @@ const resetPassword = async (req, res) => {
   res.status(200).send({ message: "Password Updated Successfully!" });
 };
 
+const sendVerificationEmail = async (req, res) => {
+  const verifyEmailToken = await tokenService.generateVerifyEmailToken(
+    req.user
+  );
+
+  await emailService.sendVerificationEmail(req.body.email, verifyEmailToken);
+
+  res.status(200).send({ message: "Link Generated, please check your email!" });
+};
+
+const verifyEmail = async (req, res) => {
+  await authService.verifyEmail(req.body.token);
+
+  res.status(200).send({ message: "Email Verified Successfully!" });
+};
+
 module.exports = {
   register,
   login,
@@ -54,4 +70,6 @@ module.exports = {
   refreshTokens,
   forgotPassword,
   resetPassword,
+  sendVerificationEmail,
+  verifyEmail,
 };

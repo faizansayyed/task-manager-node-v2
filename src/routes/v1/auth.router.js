@@ -36,4 +36,13 @@ router.post(
   validateRequest(),
   catchAsync(authController.resetPassword)
 );
+
+router.post(
+  "/send-verification-email",
+  auth,
+  authController.sendVerificationEmail
+);
+
+router.post("/verify-email", validateRequest(), authController.verifyEmail);
+
 module.exports = router;

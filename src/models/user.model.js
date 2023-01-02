@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
+const { roles } = require("../config/roles");
 
 const { toJSON } = require("./plugins");
 
@@ -35,6 +36,15 @@ const userSchema = mongoose.Schema({
   age: {
     type: Number,
     trim: true,
+  },
+  role: {
+    type: String,
+    enum: roles,
+    default: "user",
+  },
+  isEmailVerified: {
+    type: Boolean,
+    default: false,
   },
 });
 
