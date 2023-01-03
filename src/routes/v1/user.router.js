@@ -1,20 +1,41 @@
 const express = require("express");
 const { userController } = require("../../controllers");
-const validateRequest = require("../../middlewares/validateRequest");
+const validate = require("../../middlewares/validate");
 const catchAsync = require("../../utils/catchAsync");
 const auth = require("../../middlewares/auth");
+const { userValidation } = require("../../validations");
 
 const router = express.Router();
 
 router
   .route("/")
-  .post(auth, validateRequest(), catchAsync(userController.createUser))
-  .get(auth, validateRequest(), catchAsync(userController.getAllUsers));
+  .post(
+    auth,
+    validate(userValidation.createUser),
+    catchAsync(userController.createUser)
+  )
+  .get(
+    auth,
+    validate(userValidation.getUsers),
+    catchAsync(userController.getUsers)
+  );
 
 router
   .route("/:userId")
-  .get(auth, validateRequest(), catchAsync(userController.getUser))
-  .patch(auth, validateRequest(), catchAsync(userController.updateUser))
-  .delete(auth, validateRequest(), catchAsync(userController.deleteUser));
+  .get(
+    auth,
+    validate(userValidation.getUser),
+    catchAsync(userController.getUser)
+  )
+  .patch(
+    auth,
+    validate(userValidation.updateUser),
+    catchAsync(userController.updateUser)
+  )
+  .delete(
+    auth,
+    validate(userValidation.deleteUser),
+    catchAsync(userController.deleteUser)
+  );
 
 module.exports = router;

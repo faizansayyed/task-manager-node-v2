@@ -6,7 +6,7 @@ const createUser = async (req, res) => {
   res.status(200).send({ message: "User Created!", user });
 };
 
-const getAllUsers = async (req, res) => {
+const getUsers = async (req, res) => {
   const users = await userService.queryUsers();
 
   res.status(200).send({ message: "Users", users });
@@ -32,7 +32,7 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
-  getAllUsers,
+  getUsers,
   createUser,
   getUser,
   updateUser,

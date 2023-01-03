@@ -1,6 +1,6 @@
 const express = require("express");
 const { authController } = require("../../controllers");
-const validateRequest = require("../../middlewares/validateRequest");
+const validateRequest = require("../../middlewares/validate");
 const catchAsync = require("../../utils/catchAsync");
 const auth = require("../../middlewares/auth");
 

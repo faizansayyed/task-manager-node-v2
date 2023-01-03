@@ -29,6 +29,7 @@
     "express-validator": "^6.14.2",
     "helmet": "^6.0.1",
     "http-status": "^1.5.3",
+    "joi": "^17.7.0",
     "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.4",
     "mongodb": "^4.13.0",
