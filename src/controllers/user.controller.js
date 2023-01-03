@@ -1,5 +1,6 @@
 const httpStatus = require("http-status");
 const { userService } = require("../services");
+const pick = require("../utils/pick");
 
 const createUser = async (req, res) => {
   const user = await userService.createUser(req.body);
@@ -7,7 +8,9 @@ const createUser = async (req, res) => {
 };
 
 const getUsers = async (req, res) => {
-  const users = await userService.queryUsers();
+  const filter = pick(req.query, ["name", "role"]);
+  const options = pick(req.query, ["sortBy", "limit", "page"]);
+  const users = await userService.queryUsers(filter, options);
 
   res.status(200).send({ message: "Users", users });
 };
