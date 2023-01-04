@@ -15,11 +15,7 @@ const tokenSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: [
-        tokenTypes.REFRESH,
-        tokenTypes.RESET_PASSWORD,
-        tokenTypes.VERIFY_EMAIL,
-      ],
+      enum: [tokenTypes.REFRESH, tokenTypes.RESET_PASSWORD, tokenTypes.VERIFY_EMAIL],
       required: true,
     },
     expires: {
@@ -36,7 +32,7 @@ const tokenSchema = new mongoose.Schema(
   }
 );
 
-//add plugin that converts mongoose to json
+// add plugin that converts mongoose to json
 tokenSchema.plugin(toJSON);
 
 /**

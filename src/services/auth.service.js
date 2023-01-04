@@ -37,10 +37,7 @@ const logout = async (token) => {
  */
 const refreshAuth = async (refreshToken) => {
   try {
-    const refreshTokenDoc = tokenService.verifyToken(
-      refreshToken,
-      tokenTypes.REFRESH
-    );
+    const refreshTokenDoc = tokenService.verifyToken(refreshToken, tokenTypes.REFRESH);
     const user = await userService.getUserById(refreshTokenDoc.userId);
     if (!user) {
       throw new Error();
@@ -61,10 +58,7 @@ const refreshAuth = async (refreshToken) => {
  */
 const resetPassword = async (resetPasswordToken, newPassword) => {
   try {
-    const resetPasswordTokenDoc = await tokenService.verifyToken(
-      resetPasswordToken,
-      tokenTypes.RESET_PASSWORD
-    );
+    const resetPasswordTokenDoc = await tokenService.verifyToken(resetPasswordToken, tokenTypes.RESET_PASSWORD);
     const user = await userService.getUserById(resetPasswordTokenDoc.userId);
     if (!user) {
       throw new Error("");
@@ -87,10 +81,7 @@ const resetPassword = async (resetPasswordToken, newPassword) => {
  */
 const verifyEmail = async (verifyEmailToken) => {
   try {
-    const emailTokenDoc = await tokenService.verifyToken(
-      verifyEmailToken,
-      tokenTypes.VERIFY_EMAIL
-    );
+    const emailTokenDoc = await tokenService.verifyToken(verifyEmailToken, tokenTypes.VERIFY_EMAIL);
 
     const user = await userService.getUserById(emailTokenDoc.userId);
     if (!user) {

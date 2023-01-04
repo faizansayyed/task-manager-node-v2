@@ -16,7 +16,7 @@ const getUsers = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  const userId = req.params.userId;
+  const { userId } = req.params;
   const user = await userService.getUserById(userId);
 
   res.status(200).send({ message: "User", user });

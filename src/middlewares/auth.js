@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
+const httpStatus = require("http-status");
 const { Token } = require("../models");
 const config = require("../config/config");
 const ApiError = require("../utils/ApiError");
-const httpStatus = require("http-status");
 const { tokenTypes } = require("../config/tokens");
 const { roleRights } = require("../config/roles");
 
@@ -29,12 +29,10 @@ const auth =
       if (requiredRights.length) {
         const userRights = roleRights.get(user.role);
 
-        const hasRequiredRights = requiredRights.every((requiredRight) =>
-          userRights.includes(requiredRight)
-        );
+        const hasRequiredRights = requiredRights.every((requiredRight) => userRights.includes(requiredRight));
 
         if (!hasRequiredRights && req.params.userId !== user.id) {
-          return reject(new ApiError(httpStatus.FORBIDDEN, "Forbidden"));
+          return next(new ApiError(httpStatus.FORBIDDEN, "Forbidden"));
         }
       }
       next();

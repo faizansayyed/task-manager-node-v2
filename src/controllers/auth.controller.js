@@ -1,10 +1,4 @@
-const httpStatus = require("http-status");
-const {
-  authService,
-  tokenService,
-  userService,
-  emailService,
-} = require("../services");
+const { authService, tokenService, userService, emailService } = require("../services");
 
 const register = async (req, res) => {
   const user = await userService.createUser(req.body);
@@ -13,10 +7,7 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const user = await authService.loginUserWithEmailAndPassword(
-    req.body.email,
-    req.body.password
-  );
+  const user = await authService.loginUserWithEmailAndPassword(req.body.email, req.body.password);
 
   const tokens = await tokenService.generateAuthTokens(user);
   res.status(200).send({ message: "Logged In successfully!", user, tokens });
@@ -33,9 +24,7 @@ const refreshTokens = async (req, res) => {
 };
 
 const forgotPassword = async (req, res) => {
-  const resetPasswordToken = await tokenService.generateResetPasswordToken(
-    req.body.email
-  );
+  const resetPasswordToken = await tokenService.generateResetPasswordToken(req.body.email);
   await emailService.sendResetPasswordEmail(req.body.email, resetPasswordToken);
 
   res.status(200).send({ message: "Link Generated, please check your email!" });
@@ -48,9 +37,7 @@ const resetPassword = async (req, res) => {
 };
 
 const sendVerificationEmail = async (req, res) => {
-  const verifyEmailToken = await tokenService.generateVerifyEmailToken(
-    req.user
-  );
+  const verifyEmailToken = await tokenService.generateVerifyEmailToken(req.user);
 
   await emailService.sendVerificationEmail(req.body.email, verifyEmailToken);
 

@@ -1,4 +1,3 @@
-const httpStatus = require("http-status");
 const { taskService } = require("../services");
 
 const createTask = async (req, res) => {

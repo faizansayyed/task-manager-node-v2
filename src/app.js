@@ -2,14 +2,15 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 
+const compression = require("compression");
+const helmet = require("helmet");
+const httpStatus = require("http-status");
 const api = require("./routes/v1");
 const morgan = require("./config/morgan");
 const config = require("./config/config");
-const compression = require("compression");
 const { errorConverter, errorHandler } = require("./middlewares/error");
 const ApiError = require("./utils/ApiError");
-const helmet = require("helmet");
-const httpStatus = require("http-status");
+const { authLimiter } = require("./middlewares/rateLimiter");
 
 const app = express();
 
