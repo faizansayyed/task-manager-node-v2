@@ -26,6 +26,11 @@ app.use(helmet());
 // parse json request body
 app.use(express.json());
 
+// limit repeated failed requests to auth endpoints
+if (config.env === "production") {
+  app.use("/v1/auth", authLimiter);
+}
+
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
 
