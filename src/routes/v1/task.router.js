@@ -10,12 +10,12 @@ const router = express.Router();
 router
   .route("/")
   .post(
-    auth,
+    auth("manageTask"),
     validate(taskValidation.createTask),
     catchAsync(taskController.createTask)
   )
   .get(
-    auth,
+    auth("getTasks"),
     validate(taskValidation.getTasks),
     catchAsync(taskController.getAllTasks)
   );
@@ -23,17 +23,17 @@ router
 router
   .route("/:taskId")
   .get(
-    auth,
+    auth("getTask"),
     validate(taskValidation.getTask),
     catchAsync(taskController.getTask)
   )
   .patch(
-    auth,
+    auth("manageTask"),
     validate(taskValidation.updateTask),
     catchAsync(taskController.updateTask)
   )
   .delete(
-    auth,
+    auth("manageTask"),
     validate(taskValidation.deleteTask),
     catchAsync(taskController.deleteTask)
   );

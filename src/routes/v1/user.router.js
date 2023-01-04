@@ -10,12 +10,12 @@ const router = express.Router();
 router
   .route("/")
   .post(
-    auth,
+    auth("manageUsers"),
     validate(userValidation.createUser),
     catchAsync(userController.createUser)
   )
   .get(
-    auth,
+    auth("getUsers"),
     validate(userValidation.getUsers),
     catchAsync(userController.getUsers)
   );
@@ -23,17 +23,17 @@ router
 router
   .route("/:userId")
   .get(
-    auth,
+    auth("getUsers"),
     validate(userValidation.getUser),
     catchAsync(userController.getUser)
   )
   .patch(
-    auth,
+    auth("manageUsers"),
     validate(userValidation.updateUser),
     catchAsync(userController.updateUser)
   )
   .delete(
-    auth,
+    auth("manageUsers"),
     validate(userValidation.deleteUser),
     catchAsync(userController.deleteUser)
   );

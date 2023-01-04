@@ -20,7 +20,6 @@ router.post(
 );
 router.post(
   "/logout",
-  auth,
   validate(authValidation.logout),
   catchAsync(authController.logout)
 );
@@ -44,7 +43,7 @@ router.post(
 
 router.post(
   "/send-verification-email",
-  auth,
+  auth("verifyEmail"),
   validate(),
   authController.sendVerificationEmail
 );
