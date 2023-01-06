@@ -8,9 +8,7 @@ const errorConverter = (err, req, res, next) => {
   let error = err;
   if (!(error instanceof ApiError)) {
     const statusCode =
-      error.statusCode || error instanceof mongoose.Error
-        ? httpStatus.BAD_REQUEST
-        : httpStatus.INTERNAL_SERVER_ERROR;
+      error.statusCode || error instanceof mongoose.Error ? httpStatus.BAD_REQUEST : httpStatus.INTERNAL_SERVER_ERROR;
     const message = error.message || httpStatus[statusCode];
     error = new ApiError(statusCode, message, false, err.stack);
   }
@@ -34,6 +32,7 @@ const errorHandler = (err, req, res, next) => {
   };
 
   if (config.env === "development") {
+    console.log("error logs");
     logger.error(err);
   }
 
