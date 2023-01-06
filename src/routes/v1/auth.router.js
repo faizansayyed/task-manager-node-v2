@@ -5,6 +5,8 @@ const catchAsync = require("../../utils/catchAsync");
 const auth = require("../../middlewares/auth");
 const { authValidation } = require("../../validations");
 
+console.log("new change");
+
 const router = express.Router();
 
 router.post("/register", validate(authValidation.register), catchAsync(authController.register));
