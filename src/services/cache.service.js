@@ -21,7 +21,7 @@ redisClient.on("connect", () => {
   logger.info("Connected to Redis");
 });
 
-const exec = mongoose.Query.prototype.exec;
+const { exec } = mongoose.Query.prototype;
 
 mongoose.Query.prototype.cache = function (options = {}) {
   this.useCache = true;
@@ -35,11 +35,12 @@ mongoose.Query.prototype.exec = async function () {
     return exec.apply(this, arguments);
   }
 
-  const key = JSON.stringify(
-    Object.assign({}, this.getQuery(), {
+  const key = JSON.stringify({
+    ...this.getQuery(),
+    ...{
       collection: this.mongooseCollection.name,
-    })
-  );
+    },
+  });
 
   // See if we have a value for 'key' in redis
   const cacheValue = await redisClient.hGet(this.hashKey, key);
