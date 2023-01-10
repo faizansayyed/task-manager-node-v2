@@ -20,11 +20,15 @@ const createTask = async (userBody) => {
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
-const queryTasks = async () => {
-  const tasks = await Task.find({}).populate({
-    path: "userId",
-    select: "name",
-  });
+const queryTasks = async (userId) => {
+  const tasks = await Task.find({})
+    .populate({
+      path: "userId",
+      select: "name",
+    })
+    .cache({
+      key: userId,
+    });
   return tasks;
 };
 
