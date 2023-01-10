@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const redis = require("redis");
-const util = require("util");
 const config = require("../config/config");
 const logger = require("../config/logger");
 
