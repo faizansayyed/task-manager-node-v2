@@ -3,7 +3,7 @@ const app = require("./app");
 const config = require("./config/config");
 const logger = require("./config/logger");
 
-require("./services/cache.service");
+// require("./services/cache.service");
 
 let server;
 mongoose.set("strictQuery", false);

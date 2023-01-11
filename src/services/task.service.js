@@ -21,14 +21,13 @@ const createTask = async (userBody) => {
  * @returns {Promise<QueryResult>}
  */
 const queryTasks = async (userId) => {
-  const tasks = await Task.find({})
-    .populate({
-      path: "userId",
-      select: "name",
-    })
-    .cache({
-      key: userId,
-    });
+  const tasks = await Task.find({}).populate({
+    path: "userId",
+    select: "name",
+  });
+  // .cache({
+  //   key: userId,
+  // });
   return tasks;
 };
 
