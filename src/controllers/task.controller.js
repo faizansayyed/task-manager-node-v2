@@ -27,10 +27,16 @@ const deleteTask = async (req, res) => {
   res.status(200).send({ message: "Task Deleted!" });
 };
 
+const getTaskByDate = async (req, res) => {
+  const tasks = await taskService.getTaskByDate(req.body);
+  res.status(200).send({ message: "Tasks", tasks });
+};
+
 module.exports = {
   createTask,
   getAllTasks,
   getTask,
   updateTask,
   deleteTask,
+  getTaskByDate,
 };

@@ -72,10 +72,29 @@ const deleteTaskById = async (userId) => {
   return task;
 };
 
+/**
+ * Get task by date
+ * @param {Date} from
+ * @param {Date} to
+ * @returns {Promise<Task>}
+ */
+const getTaskByDate = async ({ from, to }) => {
+  const tasks = await Task.find({
+    createdAt: { $gte: new Date(from).toISOString(), $lte: new Date(to).toISOString() },
+  });
+
+  if (!tasks) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Task not found!");
+  }
+
+  return tasks;
+};
+
 module.exports = {
   createTask,
   queryTasks,
   getTaskById,
   updateTaskById,
   deleteTaskById,
+  getTaskByDate,
 };

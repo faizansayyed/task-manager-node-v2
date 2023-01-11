@@ -14,6 +14,10 @@ router
   .get(auth("getTasks"), validate(taskValidation.getTasks), catchAsync(taskController.getAllTasks));
 
 router
+  .route("/dates")
+  .post(auth("getTasks"), validate(taskValidation.getTaskByDate), catchAsync(taskController.getTaskByDate));
+
+router
   .route("/:taskId")
   .get(auth("getTask"), validate(taskValidation.getTask), catchAsync(taskController.getTask))
   .patch(auth("manageTask"), validate(taskValidation.updateTask), /* cleanCache,*/ catchAsync(taskController.updateTask))
