@@ -50,7 +50,7 @@ const dummyFileUpload = async (req, res) => {
   const file = req.file;
   const fileName = req.body.fileName;
 
-  await axios.put(req.body.uploadUrl, req.file, {
+  await axios.put(req.body.uploadUrl, req.file.buffer, {
     "Content-Type": file.mimetype,
   });
 
