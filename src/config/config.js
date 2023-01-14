@@ -9,6 +9,10 @@ module.exports = {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
   redisUrl: envVars.REDIS_URL,
+  awsS3Region: envVars.AWS_S3_REGION,
+  awsS3AccessKeyId: envVars.AWS_S3_ACCESS_KEY,
+  awsS3SecretKey: envVars.AWS_S3_SECRET_KEY,
+  awsBucketName: envVars.AWS_BUCKET_NAME,
   mongoose: {
     url: envVars.MONGODB_URL + (envVars.NODE_ENV === "test" ? "-test" : ""),
   },
