@@ -40,10 +40,18 @@ const deleteTask = {
   }),
 };
 
+const getTaskByDate = {
+  body: Joi.object().keys({
+    from: Joi.date().required().greater("1-1-1974"),
+    to: Joi.date().greater(Joi.ref("from")).required(),
+  }),
+};
+
 module.exports = {
   getTasks,
   getTask,
   createTask,
   updateTask,
   deleteTask,
+  getTaskByDate,
 };

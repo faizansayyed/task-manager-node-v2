@@ -19,6 +19,8 @@
     "consistent-return": "off",
     "jest/expect-expect": "off",
     "security/detect-object-injection": "off",
-    "no-return-await": "off"
+    "no-return-await": "off",
+    "prefer-rest-params": "off",
+    "new-cap": "off"
   }
 }

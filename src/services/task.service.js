@@ -20,11 +20,14 @@ const createTask = async (userBody) => {
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
-const queryTasks = async () => {
+const queryTasks = async (userId) => {
   const tasks = await Task.find({}).populate({
     path: "userId",
     select: "name",
   });
+  // .cache({
+  //   key: userId,
+  // });
   return tasks;
 };
 
@@ -69,10 +72,29 @@ const deleteTaskById = async (userId) => {
   return task;
 };
 
+/**
+ * Get task by date
+ * @param {Date} from
+ * @param {Date} to
+ * @returns {Promise<Task>}
+ */
+const getTaskByDate = async ({ from, to }) => {
+  const tasks = await Task.find({
+    createdAt: { $gte: new Date(from).toISOString(), $lte: new Date(to).toISOString() },
+  });
+
+  if (!tasks) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Task not found!");
+  }
+
+  return tasks;
+};
+
 module.exports = {
   createTask,
   queryTasks,
   getTaskById,
   updateTaskById,
   deleteTaskById,
+  getTaskByDate,
 };

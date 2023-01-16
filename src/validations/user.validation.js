@@ -35,6 +35,7 @@ const updateUser = {
       email: Joi.string().email(),
       password: Joi.string().custom(password),
       name: Joi.string(),
+      profileImage: Joi.string(),
     })
     .min(1),
 };
@@ -45,10 +46,15 @@ const deleteUser = {
   }),
 };
 
+const uploadUserProfile = {
+  file: Joi.required(),
+};
+
 module.exports = {
   createUser,
   getUsers,
   getUser,
   updateUser,
   deleteUser,
+  uploadUserProfile,
 };

@@ -46,6 +46,9 @@ const userSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  profileImage: {
+    type: String,
+  },
 });
 
 // add plugin that converts mongoose to json
