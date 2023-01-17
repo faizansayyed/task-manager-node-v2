@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: false,
     minlength: 7,
     trim: true,
     validate(value) {
@@ -48,6 +48,13 @@ const userSchema = mongoose.Schema({
   },
   profileImage: {
     type: String,
+  },
+  googleId: {
+    type: String,
+  },
+  isSocialLogin: {
+    type: Boolean,
+    default: false,
   },
 });
 

@@ -10,31 +10,24 @@ const auth =
   (...requiredRights) =>
   async (req, res, next) => {
     try {
-      const token = req.header("Authorization").replace("Bearer ", "");
-      const payload = jwt.verify(token, config.jwt.secret);
-
-      const tokenDoc = await Token.findOne({
-        token,
-        type: tokenTypes.REFRESH,
-        userId: payload.sub,
-        blacklisted: false,
-      }).populate("userId");
-
-      if (!tokenDoc) {
+      if (!req.isAuthenticated()) {
         throw new ApiError(httpStatus.UNAUTHORIZED, "Unauthorized!");
       }
-      req.token = tokenDoc.token;
-      const user = tokenDoc.userId;
-      req.user = user;
+
+      const user = req.user;
+
       if (requiredRights.length) {
         const userRights = roleRights.get(user.role);
 
         const hasRequiredRights = requiredRights.every((requiredRight) => userRights.includes(requiredRight));
 
-        if (!hasRequiredRights && req.params.userId !== user.id) {
+        console.log("requiredRight === ", requiredRights);
+        console.log("userRights === ", userRights);
+        if (!hasRequiredRights) {
           return next(new ApiError(httpStatus.FORBIDDEN, "Forbidden"));
         }
       }
+
       next();
     } catch (error) {
       console.log({ error });
