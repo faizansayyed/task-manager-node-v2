@@ -1,16 +1,16 @@
-const express = require("express");
-const cors = require("cors");
-const path = require("path");
+import express from "express";
+import cors from "cors";
+import path from "path";
+import compression from "compression";
+import helmet from "helmet";
+import httpStatus from "http-status";
 
-const compression = require("compression");
-const helmet = require("helmet");
-const httpStatus = require("http-status");
-const api = require("./routes/v1");
-const morgan = require("./config/morgan");
-const config = require("./config/config");
-const { errorConverter, errorHandler } = require("./middlewares/error");
-const ApiError = require("./utils/ApiError");
-const { authLimiter } = require("./middlewares/rateLimiter");
+import api from "./routes/v1";
+import morgan from "./config/morgan";
+import config from "./config/config";
+import ApiError from "./utils/ApiError";
+import { errorConverter, errorHandler } from "./middlewares/error";
+import { authLimiter } from "./middlewares/rateLimiter";
 
 const app = express();
 
@@ -62,4 +62,4 @@ app.use(errorConverter);
 // handle error
 app.use(errorHandler);
 
-module.exports = app;
+export default app;
